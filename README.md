@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## About this project
+This is my assessment for my NS application. It uses the NextJS framework.
+On the main page, you can search GitHub repositories. To apply filters
+
 ## Getting Started
 
 First, run the development server:
