@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [page, setPage] = useState<number>(1);
   const [searchResults, setSearchResults] = useState<ISearchResults>();
+  const [sort, setSort] = useState<"stars" | "forks">();
 
   const changePage = (input: -1 | 1) => {
     if ((page + input) >= 1 && (searchResults && (page + input <= Math.ceil(searchResults?.count / 100)))) {

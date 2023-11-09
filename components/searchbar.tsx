@@ -5,8 +5,7 @@ import { ISearchResults } from "@/src/models/searchResults";
 import { useCallback, useEffect, useState } from "react"
 
 interface ISearchBarProps {
-  sort?: SortOption,
-  searchParams?: SearchParam[],
+  sort?: "stars" | "forks",
   page?: number,
   setSearchResults: (results: ISearchResults) => void,
   resetPagination: () => void
@@ -15,16 +14,23 @@ interface ISearchBarProps {
 export default function SearchBar({page = 1, ...props}: ISearchBarProps) {
   const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [followers, setFollowers] = useState<number>();
+  const [stars, setStars] = useState<number>();
+  const [language, setLanguage] = useState<string>();
 
   const searchBehaviour = async () => {
     await doSearch();
+    setCurrentPage(1);
+    props.resetPagination();
   }
 
   const doSearch = useCallback(async () => {
     const requestBody = {
       search: search,
       sort: props.sort,
-      searchParams: props.searchParams,
+      stars: stars,
+      language: language,
+      followers: followers,
       page: page
     }
 
@@ -49,12 +55,13 @@ export default function SearchBar({page = 1, ...props}: ISearchBarProps) {
           props.setSearchResults(searchResult);
         }
       }
-    }, [page, props, search])
+    }, [followers, language, page, props, search, stars])
 
   useEffect(() => {
     if (page !== currentPage) {
       doSearch();
       setCurrentPage(page);
+      console.log(currentPage);
     }
   }, [currentPage, doSearch, page])
 
