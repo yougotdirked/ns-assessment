@@ -10,16 +10,19 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<ISearchResults>();
   const [sort, setSort] = useState<"stars" | "forks">();
 
+  const cols = ["name", "forks"];
+
   const changePage = (input: -1 | 1) => {
     if ((page + input) >= 1 && (searchResults && (page + input <= Math.ceil(searchResults?.count / 100)))) {
       setPage(page + input);
     }
   }
 
-  return ( <div className="flex flex-col w-full">
+  return (
+    	<div className="flex flex-col w-full">
       <h1>Search Github Repositories</h1>
       <SearchBar resetPagination={() => setPage(1)} page={page} setSearchResults={(results) => setSearchResults(results)}/>
-      <Table title={"Results"} data={searchResults?.repositories}/>
+      <Table title={"Results"} data={searchResults?.repositories} cols={cols}/>
       {
         searchResults && <div className="flex gap-2 p-3">
           <button onClick={() => changePage(-1)}>

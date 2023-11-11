@@ -2,6 +2,7 @@
 
 import { SortOption, SearchParam } from "@/src/enums";
 import { ISearchResults } from "@/src/models/searchResults";
+import { useSearchStore } from "@/src/store/searchStore";
 import { useCallback, useEffect, useState } from "react"
 
 interface ISearchBarProps {
@@ -18,9 +19,13 @@ export default function SearchBar({page = 1, ...props}: ISearchBarProps) {
   const [stars, setStars] = useState<number>();
   const [language, setLanguage] = useState<string>();
 
+  const store = useSearchStore();
+
   const searchBehaviour = async () => {
     await doSearch();
     setCurrentPage(1);
+    
+
     props.resetPagination();
   }
 
@@ -52,6 +57,7 @@ export default function SearchBar({page = 1, ...props}: ISearchBarProps) {
             count: result.total_count,
             repositories: result.items
           }
+          store.addSearch(requestBody, result.total_count);
           props.setSearchResults(searchResult);
         }
       }
