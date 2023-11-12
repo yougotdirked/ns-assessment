@@ -13,12 +13,11 @@ export interface IRequestBody {
 export function toQueryString({search, sort, stars, language, followers, page, maxCount}: IRequestBody): string {
   //Rate limits maken het een beetje vreemd: max 100 per keer..
   //Todo: resultaten controleren
-  const result = `?q=${search}`
-    + (page ? "&page=" + page : "")
+  const result = `?q=${search}+in:name+in:description+in:topics+in:readme`
     + (language ? `+language:${language}` : "")
-    + (sort ? `&sort=${sort}` : "")
     + (followers ? `+followers:>=${followers}` : "")
-    + (`$&per_page=${maxCount || 100}+in:name+in:description+in:topics+in:readme`)
-    console.log(result);
+    + (page ? "&page=" + page : "")
+    + (sort ? `&sort=${sort}` : "")
+    + (`&per_page=${maxCount || 100}`)
   return result;
 }

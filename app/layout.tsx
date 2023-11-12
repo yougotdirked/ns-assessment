@@ -13,7 +13,7 @@ export default function RootLayout({
     children: React.ReactNode
   }) {
   return (
-    <html lang="en">
+    <html lang="en" className="max-w-[1000px] m-auto">
       <link rel="icon" href="/favicon.ico" />
       <body className="flex flex-col p-10 ">
       <header>
@@ -25,7 +25,7 @@ export default function RootLayout({
           </ul>
         </nav>
       </header>
-        <main className="flex w-full ">
+        <main className="flex w-full">
           {children}
         </main>
       </body>

@@ -10,8 +10,23 @@ export default function Page() {
   const [searchResults, setSearchResults] = useState<ISearchResults>();
 
   const store = useSearchStore();
-  const searchListCols = ["name", "resultCount"];
-  const resultListCols = ["name", "forks"];
+  const searchListCols = [{label: "Name", col: "name"}, {label: "Results", col: "resultCount"}];
+  const resultListCols =  [{
+      label: "Repository Name",
+      col: "name"},
+    {
+      label: "Programming Language",
+      col: "language"
+    },
+    {
+      label: "Stars",
+      col: "stargazers_count"
+    }, 
+    { 
+      label: "Forks",
+      col: "forks"
+    }];
+
 
   const searchWithParams = async (requestBody: IRequestBody) => {
     requestBody.maxCount = 10;
@@ -37,9 +52,9 @@ export default function Page() {
 
   return (
     <div className="flex flex-col w-full">
-        <h1>Search History</h1>
-        <Table title={"Last 10 searches"} data={store.searches} cols={searchListCols} onRowClick={(e, rowData) => searchWithParams(rowData.body)}/>
-        <Table title={"Results"} data={searchResults?.repositories} cols={resultListCols}/>
+        <h1 className="text-xl mb-3">Search History</h1>
+        <Table title={"Last 10 searches"} data={store.searches} labelCols={searchListCols} onRowClick={(e, rowData) => searchWithParams(rowData.body)}/>
+        <Table title={"Results"} data={searchResults?.repositories} labelCols={resultListCols}/>
     </div>
       
   )
